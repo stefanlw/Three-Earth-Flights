@@ -26,7 +26,7 @@ animate();
 
 function init() {
 	scene = new THREE.Scene();
-  scene.background = new THREE.Color( 0x000000 )
+	scene.background = new THREE.Color( 0x000000 )
 
 	camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR );
 	scene.add(camera);
@@ -35,35 +35,29 @@ function init() {
 
 	OrbitSettings(camera);
 
-  const earth = new THREE.SphereGeometry(100, 64, 32);
-  const earthMaterial = new THREE.MeshPhongMaterial({
-    map: THREE.ImageUtils.loadTexture('images/earthspec8k.png')
-  });
+	const earth = new THREE.SphereGeometry(100, 64, 32);
+	const earthMaterial = new THREE.MeshPhongMaterial({
+	  map: THREE.ImageUtils.loadTexture('images/earthspec8k.png')
+	});
 
-  const mesh = new THREE.Mesh( earth, earthMaterial );
-  scene.add( mesh );
+	const mesh = new THREE.Mesh( earth, earthMaterial );
+	scene.add( mesh );
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer = new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
 
-  // const axisHelper = new THREE.AxisHelper(200);
-  // scene.add(axisHelper);
+	// const axisHelper = new THREE.AxisHelper(200);
+	// scene.add(axisHelper);
 
-  const light = new THREE.HemisphereLight('#fff', '#fff', 1);
-  light.position.set(0, 500, 0);
-  scene.add(light);
+	const light = new THREE.HemisphereLight('#fff', '#fff', 1);
+	light.position.set(0, 500, 0);
+	scene.add(light);
 
-  document.body.appendChild( renderer.domElement );
+	document.body.appendChild( renderer.domElement );
 
-  window.addEventListener( 'resize',onWindowResize(camera, scene, renderer), false );
-  document.addEventListener( 'click', initialMouseInteraction(controls), false);
-  renderer.autoClear = false;
-
-  // addAirportMarker(51.47, 0.4543, 0xFF00FF); // heathrow
-  // addAirportMarker(33.9416, 118.4085, 0xFF00FF) // Lax
-  // const LHR = convertLatLonToVec3(51.47, 0.45).multiplyScalar(101);
-  // const LAX = convertLatLonToVec3(33.94280, -118.40).multiplyScalar(101);
-  // drawCurve( createSphereArc(LHR,LAX), 0xFF0000)
+	window.addEventListener( 'resize',onWindowResize(camera, scene, renderer), false );
+	document.addEventListener( 'click', initialMouseInteraction(controls), false);
+	renderer.autoClear = false;
 
 	plotRoute(LHR, LAX);
 
@@ -100,9 +94,9 @@ function OrbitSettings(camera) {
 }
 
 function animate() {
-  requestAnimationFrame( animate );
+	requestAnimationFrame( animate );
 	controls.update()
-  renderer.render( scene, camera );
+	renderer.render( scene, camera );
 }
 
 function addAirportMarker(lat, lon, color) { // TODO Correct position
@@ -120,7 +114,7 @@ function createSphereArc(P,Q) {
 
 function greatCircleFunction(P, Q) {
 	const angle = P.angleTo(Q);
-	return t => {
+		return t => {
 	    var X = new THREE.Vector3().addVectors(
 			P.clone().multiplyScalar(Math.sin( (1 - t) * angle )),
 			Q.clone().multiplyScalar(Math.sin( t  * angle )))
