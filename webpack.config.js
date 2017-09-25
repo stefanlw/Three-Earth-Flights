@@ -1,7 +1,5 @@
 'use strict';
-const webpack = require('webpack');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
     context: __dirname + '/src', // `__dirname` is root of project and `src` is source

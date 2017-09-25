@@ -35,7 +35,7 @@ function init() {
   OrbitSettings(camera);
 
   const earth = new THREE.SphereGeometry(100, 64, 32);
-  const earthMaterial = new THREE.MeshPhongMaterial({map: THREE.ImageUtils.loadTexture('src/images/nasaearth.jpg')});
+  const earthMaterial = new THREE.MeshPhongMaterial({map: THREE.ImageUtils.loadTexture('images/nasaearth.jpg')});
 
   const mesh = new THREE.Mesh(earth, earthMaterial);
   scene.add(mesh);
