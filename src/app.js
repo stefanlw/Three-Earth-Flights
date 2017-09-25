@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 const OrbitControls = require('three-orbit-controls')(THREE);
-import { render, onWindowResize } from './three-utils';
+import { render, onWindowResize } from '../three-utils';
 
 let container, scene, camera, renderer, controls, mesh;
 
@@ -49,6 +49,23 @@ function init() {
   const light = new THREE.HemisphereLight('#fff', '#fff', 1);
   light.position.set(0, 500, 0);
   scene.add(light);
+
+	var curve = new THREE.EllipseCurve(
+    0, 0,             // ax, aY
+    7, 5,            // xRadius, yRadius
+    1, 3/2 * Math.PI, // aStartAngle, aEndAngle
+);
+
+var points = curve.getSpacedPoints( 100 );
+
+var path = new THREE.Path();
+var geometry = path.createGeometry( points );
+
+var material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+
+var line = new THREE.Line( geometry, material );
+
+// scene.add( line );
 
   document.body.appendChild(renderer.domElement);
 
@@ -112,7 +129,7 @@ function createSphereArc(P, Q) {
 function greatCircleFunction(P, Q) {
   const angle = P.angleTo(Q);
   return t => {
-    var X = new THREE.Vector3().addVectors(P.clone().multiplyScalar(Math.sin((1 - t) * angle)), Q.clone().multiplyScalar(Math.sin(t * angle))).divideScalar(Math.sin(angle));
+    const X = new THREE.Vector3().addVectors(P.clone().multiplyScalar(Math.sin((1 - t) * angle)), Q.clone().multiplyScalar(Math.sin(t * angle))).divideScalar(Math.sin(angle));
     return X;
   };
 }
@@ -124,13 +141,12 @@ function convertLatLonToVec3(lat, lon) {
 }
 
 function drawCurve(curve, color) {
+  console.log(curve)
   const lineGeometry = new THREE.Geometry();
-  lineGeometry.vertices = curve.getPoints(100);
-  lineGeometry.computeLineDistances();
+  lineGeometry.vertices = curve.getPoints(40);
+  // lineGeometry.computeLineDistances();
   const lineMaterial = new THREE.LineBasicMaterial();
-  lineMaterial.color = (typeof(color) === "undefined")
-    ? new THREE.Color(0xFF0000)
-    : new THREE.Color(color);
+  lineMaterial.color = new THREE.Color(color)
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
 }
